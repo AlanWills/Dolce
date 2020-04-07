@@ -1,5 +1,5 @@
 set(INCLUDES 
-    ${GLEW_PROJECT_DIR}/include)
+    ${THIRD_PARTY_DIR}/glew/include)
 
 set(LIBS 
     opengl32
