@@ -5,6 +5,8 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
 
+#include <algorithm>
+
 
 namespace Dolce
 {
@@ -66,6 +68,34 @@ namespace Dolce
   {
     m_windows.emplace_back(std::move(window));
     return *m_windows.back();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  observer_ptr<DolceWindow> Dolce::findWindow(const std::string& windowName) const
+  {
+    auto foundWindowIt = std::find_if(m_windows.begin(), m_windows.end(),
+      [&windowName](const std::unique_ptr<DolceWindow>& window)
+      {
+        return window->getName() == windowName;
+      });
+
+    return foundWindowIt != m_windows.end() ? (*foundWindowIt).get() : nullptr;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  std::vector<std::string> Dolce::getOpenWindows() const
+  {
+    std::vector<std::string> openWindows;
+
+    for (const auto& window : m_windows)
+    {
+      if (window->isOpen())
+      {
+        openWindows.push_back(window->getName());
+      }
+    }
+
+    return openWindows;
   }
 
   //------------------------------------------------------------------------------------------------

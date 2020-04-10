@@ -5,6 +5,7 @@ set(LIBS
     opengl32
     glfw
 	glew
+    imgui
     Platform
     Assert)
 

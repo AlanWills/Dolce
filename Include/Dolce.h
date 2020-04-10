@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DolceWindow.h"
+#include "Memory/ObserverPtr.h"
 
 #include <vector>
 #include <memory>
@@ -20,7 +21,7 @@ namespace Dolce
 
       Dolce& operator=(const Dolce&) = delete;
       Dolce& operator=(Dolce&&) = delete;
-
+     
       bool isEnabled() const;
       void setEnabled(bool isEnabled);
 
@@ -28,6 +29,9 @@ namespace Dolce
       bool hasMouseFocus() const;
 
       DolceWindow& registerWindow(std::unique_ptr<DolceWindow>&& window);
+      observer_ptr<DolceWindow> findWindow(const std::string& windowName) const;
+
+      std::vector<std::string> getOpenWindows() const;
 
       void render();
 
