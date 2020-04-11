@@ -123,7 +123,7 @@ namespace Dolce
             for (const auto& window : m_windows)
             {
               bool windowOpen = window->isOpen();
-              if (ImGui::MenuItem(window->getName().c_str(), nullptr, windowOpen))
+              if (ImGui::MenuItem(window->getName().c_str(), nullptr, windowOpen, window->canOpen()))
               {
                 if (windowOpen)
                 {
@@ -147,7 +147,7 @@ namespace Dolce
           bool isWindowOpen = window->isOpen();
           if (isWindowOpen)
           {
-            if (ImGui::Begin(window->getName().c_str(), &isWindowOpen))
+            if (ImGui::Begin(window->getName().c_str(), &isWindowOpen, window->getWindowFlags()))
             {
               window->render();
             }

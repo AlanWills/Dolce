@@ -28,7 +28,10 @@ namespace Dolce
       bool hasKeyboardFocus() const;
       bool hasMouseFocus() const;
 
+      template <typename T>
+      T& registerWindow(std::unique_ptr<T>&& window);
       DolceWindow& registerWindow(std::unique_ptr<DolceWindow>&& window);
+
       observer_ptr<DolceWindow> findWindow(const std::string& windowName) const;
 
       std::vector<std::string> getOpenWindows() const;
@@ -41,4 +44,11 @@ namespace Dolce
       bool m_enabled;
       Windows m_windows;
   };
+
+  //------------------------------------------------------------------------------------------------
+  template <typename T>
+  T& Dolce::registerWindow(std::unique_ptr<T>&& window)
+  {
+    return static_cast<T&>(registerWindow(std::move(std::unique_ptr<DolceWindow>(window.release()))));
+  }
 }

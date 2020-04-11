@@ -1,5 +1,7 @@
 #pragma once
 
+#include "imgui.h"
+
 #include <string>
 
 
@@ -18,14 +20,21 @@ namespace Dolce
 
       const std::string& getName() const { return m_name; }
 
+      virtual bool canOpen() const { return true; }
       bool isOpen() const { return m_open; }
       void open() { m_open = true; }
       void close() { m_open = false; }
+
+      ImGuiWindowFlags getWindowFlags() const { return m_windowFlags; }
+      void setWindowFlags(ImGuiWindowFlags windowFlags) { m_windowFlags = windowFlags; }
+      void addWindowFlag(ImGuiWindowFlags_ windowFlag) { m_windowFlags |= windowFlag; }
+      void removeWindowFlag(ImGuiWindowFlags_ windowFlag) { m_windowFlags &= ~windowFlag; }
 
       virtual void render() = 0;
 
     private:
       std::string m_name;
       bool m_open;
+      ImGuiWindowFlags m_windowFlags;
   };
 }
