@@ -9,4 +9,4 @@ set(LIBS
     Platform
     Assert)
 
-build_library(NAME Dolce FOLDER Dolce TYPE STATIC INCLUDES "${INCLUDES}" LIBS "${LIBS}")
+cbt_build_project(NAME Dolce FOLDER Dolce TYPE STATIC INCLUDES "${INCLUDES}" LIBS "${LIBS}")
