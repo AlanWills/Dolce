@@ -13,7 +13,7 @@ namespace TestDolceLua
     Celeste::Assertion::setAsserter(std::make_unique<Celeste::NullAsserter>());
 
     Celeste::Path celesteLuaScripts(Celeste::Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING,
-      "Celeste", "CelesteLua", "Resources", "Scripts", "?.lua;");
+      "Celeste", "Celeste", "Lua", "Resources", "Scripts", "?.lua;");
     Celeste::Lua::LuaState::appendToLuaPackagePath(celesteLuaScripts);
   }
 }
