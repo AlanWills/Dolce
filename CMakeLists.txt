@@ -7,6 +7,7 @@ set(LIBS
 	glew
     imgui
     Platform
-    Assert)
+    Assert
+    System)
 
 cbt_build_project(NAME Dolce FOLDER Dolce TYPE STATIC INCLUDES "${INCLUDES}" LIBS "${LIBS}")

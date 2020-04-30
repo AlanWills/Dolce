@@ -2,6 +2,7 @@
 
 #include "DolceWindow.h"
 #include "Memory/ObserverPtr.h"
+#include "System/ISystem.h"
 
 #include <vector>
 #include <memory>
@@ -11,13 +12,13 @@ struct GLFWwindow;
 
 namespace Dolce
 {
-  class Dolce
+  class Dolce : public Celeste::System::ISystem
   {
     public:
       Dolce(GLFWwindow* window);
       Dolce(const Dolce&) = delete;
       Dolce(Dolce&&) = delete;
-      ~Dolce();
+      ~Dolce() override;
 
       Dolce& operator=(const Dolce&) = delete;
       Dolce& operator=(Dolce&&) = delete;
@@ -36,6 +37,8 @@ namespace Dolce
 
       std::vector<std::string> getOpenWindows() const;
 
+      void handleInput() override {}
+      void update(float /*elapsedGameTime*/) override {}
       void render();
 
     private:
