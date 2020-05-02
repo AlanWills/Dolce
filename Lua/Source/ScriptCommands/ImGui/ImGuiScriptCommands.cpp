@@ -1,7 +1,7 @@
 #include "ScriptCommands/ImGui/ImGuiScriptCommands.h"
 #include "sol/sol.hpp"
 
-#include "imgui.h"
+#include "imgui/imgui.h"
 
 
 namespace Dolce::Lua::ImGui::ScriptCommands

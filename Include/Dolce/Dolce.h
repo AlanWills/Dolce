@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DolceWindow.h"
-#include "Memory/ObserverPtr.h"
+#include "Dolce/DolceWindow.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 #include "System/ISystem.h"
 
 #include <vector>
@@ -37,7 +37,6 @@ namespace Dolce
 
       std::vector<std::string> getOpenWindows() const;
 
-      void handleInput() override {}
       void update(float /*elapsedGameTime*/) override {}
       void render();
 

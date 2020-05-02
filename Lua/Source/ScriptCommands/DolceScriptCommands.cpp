@@ -1,8 +1,8 @@
-#include "ScriptCommands/DolceScriptCommands.h"
+#include "ScriptCommands/Dolce/DolceScriptCommands.h"
 #include "ScriptCommands/ImGui/ImGuiScriptCommands.h"
 #include "Lua/LuaState.h"
-#include "LuaDolceWindow.h"
-#include "Dolce.h"
+#include "Dolce/Windows/LuaDolceWindow.h"
+#include "Dolce/Dolce.h"
 
 namespace Dolce::Lua::ScriptCommands
 {

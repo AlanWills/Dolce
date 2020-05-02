@@ -1,4 +1,4 @@
-#include "DolceWindow.h"
+#include "Dolce/DolceWindow.h"
 
 
 namespace Dolce

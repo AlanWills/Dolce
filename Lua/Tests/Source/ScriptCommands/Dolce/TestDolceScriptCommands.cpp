@@ -1,8 +1,8 @@
-#include "TestUtils.h"
-#include "LuaAssert.h"
+#include "TestUtils/TestUtils.h"
+#include "TestUtils/Assert/LuaAssert.h"
 #include "Lua/LuaState.h"
-#include "ScriptCommands/DolceScriptCommands.h"
-#include "Dolce.h"
+#include "ScriptCommands/Dolce/DolceScriptCommands.h"
+#include "Dolce/Dolce.h"
 #include "GLFW/glfw3.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -17,7 +17,7 @@ namespace TestDolceLua
   GLFWwindow* window;
 
   //------------------------------------------------------------------------------------------------
-  void TestDolceScriptCommands::testInitialize()
+  void testInitialize()
   {
     glfwInit();
     window = glfwCreateWindow(1, 1, "", nullptr, nullptr);
@@ -28,7 +28,7 @@ namespace TestDolceLua
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestDolceScriptCommands::testCleanup()
+  void testCleanup()
   {
     glfwTerminate();
     if (window != nullptr)

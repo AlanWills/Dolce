@@ -1,8 +1,8 @@
-#include "TestUtils.h"
-#include "LuaAssert.h"
+#include "TestUtils/TestUtils.h"
+#include "TestUtils/Assert/LuaAssert.h"
 #include "Lua/LuaState.h"
 #include "ScriptCommands/ImGui/ImGuiScriptCommands.h"
-#include "Dolce.h"
+#include "Dolce/Dolce.h"
 
 using LuaState = Celeste::Lua::LuaState;
 
@@ -12,14 +12,14 @@ namespace TestDolceLua
   TEST_UTILS_TEST_CLASS(TestImGuiScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestImGuiScriptCommands::testInitialize()
+  void testInitialize()
   {
     LuaState::instance()["ImGui"] = sol::nil;
     LuaState::instance().collect_garbage();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestImGuiScriptCommands::testCleanup()
+  void testCleanup()
   {
     LuaState::instance()["ImGui"] = sol::nil;
     LuaState::instance().collect_garbage();

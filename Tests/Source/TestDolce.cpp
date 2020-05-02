@@ -1,5 +1,5 @@
-#include "TestUtils.h"
-#include "Dolce.h"
+#include "TestUtils/TestUtils.h"
+#include "Dolce/Dolce.h"
 #include "GLFW/glfw3.h"
 
 #include "Mocks/MockDolceWindow.h"
@@ -12,14 +12,14 @@ namespace TestDolce
   GLFWwindow* window;
 
   //------------------------------------------------------------------------------------------------
-  void TestDolce::testInitialize()
+  void testInitialize()
   {
     glfwInit();
     window = glfwCreateWindow(1, 1, "", nullptr, nullptr);
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestDolce::testCleanup()
+  void testCleanup()
   {
     glfwTerminate();
     if (window != nullptr)

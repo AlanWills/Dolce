@@ -1,5 +1,5 @@
-#include "LuaDolceWindow.h"
-#include "imgui.h"
+#include "Dolce/Windows/LuaDolceWindow.h"
+#include "imgui/imgui.h"
 
 
 namespace Dolce
