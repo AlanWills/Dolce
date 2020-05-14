@@ -64,10 +64,25 @@ namespace Dolce
   }
 
   //------------------------------------------------------------------------------------------------
-  DolceWindow& Dolce::registerWindow(std::unique_ptr<DolceWindow>&& window)
+  observer_ptr<DolceWindow> Dolce::addWindow(std::unique_ptr<DolceWindow>&& window)
   {
     m_windows.emplace_back(std::move(window));
-    return *m_windows.back();
+    return m_windows.back().get();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Dolce::removeWindow(const std::string& windowName)
+  {
+    auto foundWindowIt = std::find_if(m_windows.begin(), m_windows.end(),
+      [&windowName](const std::unique_ptr<DolceWindow>& window)
+      {
+        return window->getName() == windowName;
+      });
+
+    if (foundWindowIt != m_windows.end())
+    {
+      m_windows.erase(foundWindowIt);
+    }
   }
 
   //------------------------------------------------------------------------------------------------

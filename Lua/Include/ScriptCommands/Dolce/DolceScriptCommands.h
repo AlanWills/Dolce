@@ -8,10 +8,10 @@ namespace sol
 
 namespace Dolce
 {
-  class Dolce;
+  class IDolce;
 }
 
 namespace Dolce::Lua::ScriptCommands
 {
-  void initialize(sol::state& state, Dolce& dolce);
+  void initialize(sol::state& state, IDolce& dolce);
 }

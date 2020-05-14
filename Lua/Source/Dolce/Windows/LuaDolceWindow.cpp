@@ -6,7 +6,8 @@ namespace Dolce
 {
   //------------------------------------------------------------------------------------------------
   LuaDolceWindow::LuaDolceWindow(const std::string& windowName, sol::table windowTable) :
-    DolceWindow(windowName)
+    DolceWindow(windowName),
+    m_windowTable(windowTable)
   {
     m_renderFunction = windowTable["render"].get<sol::protected_function>();
   }
@@ -16,7 +17,7 @@ namespace Dolce
   {
     if (m_renderFunction.valid())
     {
-      auto result = m_renderFunction.call();
+      auto result = m_renderFunction.call(m_windowTable);
       if (!result.valid())
       {
         sol::error e = result;

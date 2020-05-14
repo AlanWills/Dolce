@@ -14,6 +14,7 @@ namespace Dolce
       void render() override;
 
     private:
+      sol::table m_windowTable;
       sol::protected_function m_renderFunction;
   };
 }

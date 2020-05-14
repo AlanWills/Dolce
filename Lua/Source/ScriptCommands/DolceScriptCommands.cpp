@@ -2,27 +2,28 @@
 #include "ScriptCommands/ImGui/ImGuiScriptCommands.h"
 #include "Lua/LuaState.h"
 #include "Dolce/Windows/LuaDolceWindow.h"
-#include "Dolce/Dolce.h"
+#include "Dolce/IDolce.h"
 
 namespace Dolce::Lua::ScriptCommands
 {
   namespace Internals
   {
-    void registerWindow(Dolce& dolce, const std::string& windowName, sol::table windowTable)
+    void addWindow(IDolce& dolce, const std::string& windowName, sol::table windowTable)
     {
-      dolce.registerWindow(std::make_unique<::Dolce::LuaDolceWindow>(windowName, windowTable));
+      dolce.addWindow(std::make_unique<::Dolce::LuaDolceWindow>(windowName, windowTable));
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  void initialize(sol::state& state, Dolce& dolce)
+  void initialize(sol::state& state, IDolce& dolce)
   {
     ImGui::ScriptCommands::initialize(state);
 
-    auto dolceUserType = state.new_usertype<Dolce>(
+    auto dolceUserType = state.new_usertype<IDolce>(
       "Dolce",
       "instance", sol::make_object(state.lua_state(), &dolce),
-      "registerWindow", &Internals::registerWindow);
+      "addWindow", &Internals::addWindow,
+      "removeWindow", &IDolce::removeWindow);
 
     Celeste::Lua::LuaState::requireModule("Debug.DolceWindows");
   }

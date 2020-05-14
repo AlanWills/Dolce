@@ -1,18 +1,14 @@
 #pragma once
 
+#include "Dolce/IDolce.h"
 #include "Dolce/DolceWindow.h"
-#include "CelesteStl/Memory/ObserverPtr.h"
-#include "System/ISystem.h"
-
-#include <vector>
-#include <memory>
 
 struct GLFWwindow;
 
 
 namespace Dolce
 {
-  class Dolce : public Celeste::System::ISystem
+  class Dolce : public IDolce
   {
     public:
       Dolce(GLFWwindow* window);
@@ -23,22 +19,22 @@ namespace Dolce
       Dolce& operator=(const Dolce&) = delete;
       Dolce& operator=(Dolce&&) = delete;
      
-      bool isEnabled() const;
-      void setEnabled(bool isEnabled);
+      bool isEnabled() const override;
+      void setEnabled(bool isEnabled) override;
 
-      bool hasKeyboardFocus() const;
-      bool hasMouseFocus() const;
+      bool hasKeyboardFocus() const override;
+      bool hasMouseFocus() const override;
 
       template <typename T>
-      T& registerWindow(std::unique_ptr<T>&& window);
-      DolceWindow& registerWindow(std::unique_ptr<DolceWindow>&& window);
+      observer_ptr<T> addWindow(std::unique_ptr<T>&& window);
+      observer_ptr<DolceWindow> addWindow(std::unique_ptr<DolceWindow>&& window) override;
+      void removeWindow(const std::string& windowName) override;
 
-      observer_ptr<DolceWindow> findWindow(const std::string& windowName) const;
-
-      std::vector<std::string> getOpenWindows() const;
+      observer_ptr<DolceWindow> findWindow(const std::string& windowName) const override;
+      std::vector<std::string> getOpenWindows() const override;
 
       void update(float /*elapsedGameTime*/) override {}
-      void render();
+      void render() override;
 
     private:
       using Windows = std::vector<std::unique_ptr<DolceWindow>>;
@@ -49,8 +45,8 @@ namespace Dolce
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  T& Dolce::registerWindow(std::unique_ptr<T>&& window)
+  observer_ptr<T> Dolce::addWindow(std::unique_ptr<T>&& window)
   {
-    return static_cast<T&>(registerWindow(std::move(std::unique_ptr<DolceWindow>(window.release()))));
+    return static_cast<observer_ptr<T>>(addWindow(std::move(std::unique_ptr<DolceWindow>(window.release()))));
   }
 }
