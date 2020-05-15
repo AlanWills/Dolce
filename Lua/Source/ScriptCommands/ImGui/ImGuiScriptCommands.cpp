@@ -3,6 +3,7 @@
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_stdlib.h"
+#include "imgui/DefaultInput.h"
 
 
 namespace Dolce::Lua::ImGui::ScriptCommands
@@ -10,32 +11,11 @@ namespace Dolce::Lua::ImGui::ScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
-    std::tuple<bool, int> inputInt(const std::string& label, int value)
+    template <typename T>
+    std::tuple<T, bool> input(const std::string& label, T value)
     {
-      bool result = ::ImGui::InputInt(label.c_str(), &value);
-      return std::make_tuple(result, value);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    std::tuple<bool, unsigned int> inputUInt(const std::string& label, unsigned int value)
-    {
-      int iValue = std::max(0, static_cast<int>(value));
-      bool result = ::ImGui::InputInt(label.c_str(), &iValue);
-      return std::make_tuple(result, static_cast<unsigned int>(std::max(0, iValue)));
-    }
-
-    //------------------------------------------------------------------------------------------------
-    std::tuple<bool, float> inputFloat(const std::string& label, float value)
-    {
-      bool result = ::ImGui::InputFloat(label.c_str(), &value);
-      return std::make_tuple(result, value);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    std::tuple<bool, bool> checkbox(const std::string& label, bool value)
-    {
-      bool result = ::ImGui::Checkbox(label.c_str(), &value);
-      return std::make_tuple(result, value);
+      bool result = Dolce::input(label, value);
+      return std::make_tuple(value, result);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -49,6 +29,19 @@ namespace Dolce::Lua::ImGui::ScriptCommands
     {
       return ::ImGui::TreeNode(label.c_str());
     }
+
+    //------------------------------------------------------------------------------------------------
+    bool beginCombo(const std::string& label, const std::string& preview)
+    {
+      return ::ImGui::BeginCombo(label.c_str(), preview.c_str());
+    }
+
+    //------------------------------------------------------------------------------------------------
+    std::tuple<bool, bool> selectable(const std::string& label, bool isSelected)
+    {
+      bool result = ::ImGui::Selectable(label.c_str(), &isSelected);
+      return std::make_tuple(isSelected, result);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -57,12 +50,15 @@ namespace Dolce::Lua::ImGui::ScriptCommands
     state.create_named_table(
       "ImGui",
       "text", &::ImGui::Text,
-      "inputInt", &Internals::inputInt,
-      "inputUInt", &Internals::inputUInt,
-      "inputFloat", &Internals::inputFloat,
-      "checkbox", &Internals::checkbox,
+      "inputInt", &Internals::input<int>,
+      "inputUInt", &Internals::input<unsigned int>,
+      "inputFloat", &Internals::input<float>,
+      "checkbox", &Internals::input<bool>,
       "button", &Internals::button,
       "treeNode", &Internals::treeNode,
-      "treePop", &::ImGui::TreePop);
+      "treePop", &::ImGui::TreePop,
+      "beginCombo", &Internals::beginCombo,
+      "endCombo", &::ImGui::EndCombo,
+      "selectable", &Internals::selectable);
   }
 }
