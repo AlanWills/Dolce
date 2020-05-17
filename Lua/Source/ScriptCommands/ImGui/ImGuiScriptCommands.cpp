@@ -53,6 +53,7 @@ namespace Dolce::Lua::ImGui::ScriptCommands
       "inputInt", &Internals::input<int>,
       "inputUInt", &Internals::input<unsigned int>,
       "inputFloat", &Internals::input<float>,
+      "inputText", &Internals::input<std::string>,
       "checkbox", &Internals::input<bool>,
       "button", &Internals::button,
       "treeNode", &Internals::treeNode,
