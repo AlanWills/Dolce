@@ -2,6 +2,7 @@
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_stdlib.h"
+#include "glm/glm.hpp"
 
 #include <string>
 
@@ -43,5 +44,26 @@ namespace Dolce
   bool input(const std::string& key, std::string& value)
   {
     return ImGui::InputText(key.c_str(), &value);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  bool input(const std::string& key, glm::vec3& value)
+  {
+    ImGui::Text(key.c_str());
+
+    if (input("x", value.x))
+    {
+      return true;
+    }
+    else if (input("y", value.y))
+    {
+      return true;
+    }
+    else if (input("z", value.z))
+    {
+      return true;
+    }
+
+    return false;
   }
 }
