@@ -42,7 +42,7 @@ namespace TestDolce
   TEST_METHOD(FindWindow_InputtingExistentWindowName_ReturnsWindowPtr)
   {
     Dolce::Dolce dolce(window);
-    dolce.registerWindow(std::make_unique<MockDolceWindow>("Test"));
+    dolce.addWindow(std::make_unique<MockDolceWindow>("Test"));
 
     Assert::IsNotNull(dolce.findWindow("Test"));
   }
@@ -63,7 +63,7 @@ namespace TestDolce
   TEST_METHOD(GetOpenWindows_NoOpenWindows_ReturnsEmptyList)
   {
     Dolce::Dolce dolce(window);
-    dolce.registerWindow(std::make_unique<MockDolceWindow>("Test"));
+    dolce.addWindow(std::make_unique<MockDolceWindow>("Test"));
 
     Assert::IsTrue(dolce.getOpenWindows().empty());
   }
@@ -72,9 +72,9 @@ namespace TestDolce
   TEST_METHOD(GetOpenWindows_OpenWindows_ReturnsListOfOpenWindowNames)
   {
     Dolce::Dolce dolce(window);
-    dolce.registerWindow(std::make_unique<MockDolceWindow>("Test")).open();
-    dolce.registerWindow(std::make_unique<MockDolceWindow>("Test2"));
-    dolce.registerWindow(std::make_unique<MockDolceWindow>("Test3")).open();
+    dolce.addWindow(std::make_unique<MockDolceWindow>("Test"))->open();
+    dolce.addWindow(std::make_unique<MockDolceWindow>("Test2"));
+    dolce.addWindow(std::make_unique<MockDolceWindow>("Test3"))->open();
 
     auto openWindows = dolce.getOpenWindows();
 
