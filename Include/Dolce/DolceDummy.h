@@ -10,6 +10,7 @@ namespace Dolce
   class DolceDummy : public IDolce
   {
     public:
+      DolceDummy() = default;
       DolceDummy(const DolceDummy&) = delete;
       DolceDummy(DolceDummy&&) = delete;
       ~DolceDummy() override = default;
@@ -29,6 +30,7 @@ namespace Dolce
       observer_ptr<DolceWindow> findWindow(const std::string& /*windowName*/) const override { return nullptr; }
       std::vector<std::string> getOpenWindows() const override { return {}; }
 
+      void update(float /*elapsedGameTime*/) override {}
       void render() override {}
   };
 }
