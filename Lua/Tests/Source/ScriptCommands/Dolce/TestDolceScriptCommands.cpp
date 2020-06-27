@@ -24,6 +24,7 @@ namespace TestDolceLua
 
     LuaState::instance()["Dolce"] = sol::nil;
     LuaState::instance()["ImGui"] = sol::nil;
+    LuaState::instance()["package"]["loaded"]["Debug.DolceWindows"] = sol::nil;
     LuaState::instance().collect_garbage();
   }
 
@@ -38,6 +39,7 @@ namespace TestDolceLua
 
     LuaState::instance()["Dolce"] = sol::nil;
     LuaState::instance()["ImGui"] = sol::nil;
+    LuaState::instance()["package"]["loaded"]["Debug.DolceWindows"] = sol::nil;
     LuaState::instance().collect_garbage();
   }
 
@@ -64,13 +66,13 @@ namespace TestDolceLua
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(DolceScriptCommands_Initialize_Adds_registerWindow_ToDolceTable)
+  TEST_METHOD(DolceScriptCommands_Initialize_Adds_addWindow_ToDolceTable)
   {
     sol::state& state = LuaState::instance();
     Dolce::Dolce dolce(window);
     Dolce::Lua::ScriptCommands::initialize(state, dolce);
 
-    Assert::IsTrue(state["Dolce"]["registerWindow"].valid());
+    Assert::IsTrue(state["Dolce"]["addWindow"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -83,6 +85,45 @@ namespace TestDolceLua
     Assert::IsTrue(state["package"].valid());
     Assert::IsTrue(state["package"]["loaded"].valid());
     Assert::IsTrue(state["package"]["loaded"]["Debug.DolceWindows"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(DolceScriptCommands_Initialize_RegistersPerformanceDolceWindow)
+  {
+    sol::state& state = LuaState::instance();
+    Dolce::Dolce dolce(window);
+    
+    Assert::IsNull(dolce.findWindow("Performance"));
+
+    Dolce::Lua::ScriptCommands::initialize(state, dolce);
+
+    Assert::IsNotNull(dolce.findWindow("Performance"));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(DolceScriptCommands_Initialize_RegistersInputDolceWindow)
+  {
+    sol::state& state = LuaState::instance();
+    Dolce::Dolce dolce(window);
+
+    Assert::IsNull(dolce.findWindow("Input"));
+
+    Dolce::Lua::ScriptCommands::initialize(state, dolce);
+
+    Assert::IsNotNull(dolce.findWindow("Input"));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(DolceScriptCommands_Initialize_RegistersWindowInfoWindow)
+  {
+    sol::state& state = LuaState::instance();
+    Dolce::Dolce dolce(window);
+
+    Assert::IsNull(dolce.findWindow("Window Info"));
+
+    Dolce::Lua::ScriptCommands::initialize(state, dolce);
+
+    Assert::IsNotNull(dolce.findWindow("Window Info"));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -116,16 +157,17 @@ namespace TestDolceLua
 #pragma region Register Window Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(DolceScriptCommands_registerWindow_AddsWindowToDolceInstance)
+  TEST_METHOD(DolceScriptCommands_addWindow_AddsWindowToDolceInstance)
   {
     sol::state& state = LuaState::instance();
     Dolce::Dolce dolce(window);
+    Dolce::IDolce& iDolce = dolce;
     Dolce::Lua::ScriptCommands::initialize(state, dolce);
 
     sol::table windowTable = state.create_table();
     windowTable["render"] = &render;
 
-    auto result = state["Dolce"]["registerWindow"].get<sol::protected_function>().call(dolce, "Test Window", windowTable);
+    auto result = state["Dolce"]["addWindow"].get<sol::protected_function>().call(iDolce, "Test Window", windowTable);
 
     LuaAssert::IsValid(result);
     Assert::IsNotNull(dolce.findWindow("Test Window"));
