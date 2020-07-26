@@ -7,7 +7,7 @@
 
 namespace TestDolce
 {
-  TEST_UTILS_TEST_CLASS(TestDolce)
+  BASE_TEST_CLASS(TestDolce)
 
   GLFWwindow* window;
 

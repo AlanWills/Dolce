@@ -9,7 +9,7 @@ using LuaState = Celeste::Lua::LuaState;
 
 namespace TestDolceLua
 {
-  TEST_UTILS_TEST_CLASS(TestImGuiScriptCommands)
+  BASE_TEST_CLASS(TestImGuiScriptCommands)
 
   //------------------------------------------------------------------------------------------------
   void testInitialize()

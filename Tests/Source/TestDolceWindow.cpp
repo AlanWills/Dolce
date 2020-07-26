@@ -5,7 +5,7 @@
 
 namespace TestDolce
 {
-  TEST_UTILS_TEST_CLASS(TestDolceWindow)
+  BASE_TEST_CLASS(TestDolceWindow)
 
 #pragma region Constructor Tests
 

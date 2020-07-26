@@ -12,7 +12,7 @@ namespace TestDolceLua
 {
   void render() {}
 
-  TEST_UTILS_TEST_CLASS(TestDolceScriptCommands)
+  BASE_TEST_CLASS(TestDolceScriptCommands)
 
   GLFWwindow* window;
 
